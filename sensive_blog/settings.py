@@ -8,7 +8,7 @@ env.read_env()
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 SECRET_KEY = os.getenv("SECRET_KEY", "REPLACE_ME")
 
@@ -21,7 +21,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-
+    'django_extensions',
     'blog',
 ]
 
