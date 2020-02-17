@@ -58,3 +58,6 @@ class Comment(models.Model):
         ordering = ['published_at']
         verbose_name = 'комментарий'
         verbose_name_plural = 'комментарии'
+
+SHELL_PLUS_PRINT_SQL = True
+SHELL_PLUS = "ipython"

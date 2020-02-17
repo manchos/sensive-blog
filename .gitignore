@@ -86,7 +86,7 @@ __pycache__/
 local_settings.py
 
 .env
-db.sqlite3
+*.sqlite3
 media/
 .idea/
 test_requirements.txt
