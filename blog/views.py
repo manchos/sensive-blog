@@ -7,10 +7,6 @@ def get_related_posts_count(tag):
     return tag.posts.count()
 
 
-def get_likes_count(post):
-    return post.likes.count()
-
-
 def get_most_popular_posts(num_posts=5):
     return Post.objects.annotate(
         num_likes=Count('likes')).order_by('-num_likes')[:num_posts]

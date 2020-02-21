@@ -7,10 +7,13 @@ env.read_env()
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
+INTERNAL_IPS = [
+    os.getenv("INTERNAL_IP")
+]
 
 ALLOWED_HOSTS = ['*']
 
-SECRET_KEY = os.getenv("SECRET_KEY", "REPLACE_ME")
+SECRET_KEY = os.getenv("SECRET_KEY")
 
 DEBUG = env.bool("DEBUG", True)
 
@@ -23,6 +26,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'django_extensions',
     'blog',
+    'debug_toolbar',
 ]
 
 MIDDLEWARE = [
@@ -33,6 +37,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'debug_toolbar.middleware.DebugToolbarMiddleware',
 ]
 
 ROOT_URLCONF = 'sensive_blog.urls'
@@ -97,3 +102,6 @@ STATIC_URL = '/static/'
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
+
+SHELL_PLUS_PRINT_SQL = True
+SHELL_PLUS = "ipython"

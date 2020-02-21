@@ -45,7 +45,8 @@ class Tag(models.Model):
 
 
 class Comment(models.Model):
-    post = models.ForeignKey("Post", on_delete=models.CASCADE, verbose_name="Пост, к которому написан")
+    post = models.ForeignKey("Post", on_delete=models.CASCADE,
+                             verbose_name="Пост, к которому написан")
     author = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name="Автор")
 
     text = models.TextField("Текст комментария")
@@ -58,6 +59,3 @@ class Comment(models.Model):
         ordering = ['published_at']
         verbose_name = 'комментарий'
         verbose_name_plural = 'комментарии'
-
-SHELL_PLUS_PRINT_SQL = True
-SHELL_PLUS = "ipython"
