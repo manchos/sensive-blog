@@ -2,6 +2,7 @@ from django.db import models
 from django.urls import reverse
 from django.contrib.auth.models import User
 from django.db.models import Count
+from django.db.models.query import Prefetch
 
 
 class PostQuerySet(models.QuerySet):
@@ -10,14 +11,12 @@ class PostQuerySet(models.QuerySet):
         return posts_at_year
 
     def popular(self, tag=None):
+        posts_qs = self.prefetch_related('author') \
+            .annotate(likes_count=Count('likes')).order_by('-likes_count')
         if tag is not None:
-            most_popular_posts = self.prefetch_related(
-                'author').annotate(
-                likes_count=Count('likes')).order_by('-likes_count').filter(
-                tags__id__contains=tag.id)
+            most_popular_posts = posts_qs.filter(tags__id__contains=tag.id)
         else:
-            most_popular_posts = self.prefetch_related('author').annotate(
-            likes_count=Count('likes')).order_by('-likes_count')
+            most_popular_posts = posts_qs
         return most_popular_posts
 
     def fetch_with_comments_count(self):
@@ -32,6 +31,11 @@ class PostQuerySet(models.QuerySet):
             post.num_comments = count_for_id[post.id]
             posts_with_comments_list.append(post)
         return posts_with_comments_list
+
+    def fetch_posts_count_for_tag(self):
+        return self.prefetch_related(
+            Prefetch('tags', Tag.objects.annotate(num_posts=Count('posts'))))
+
 
 
 class Post(models.Model):
@@ -61,8 +65,9 @@ class Post(models.Model):
 
 class TagQuerySet(models.QuerySet):
     def popular(self):
-        populate_tags = self.annotate(
-            num_posts=Count('posts', distinct=True)).order_by('-num_posts')
+        populate_tags = self \
+            .annotate(num_posts=Count('posts', distinct=True)) \
+            .order_by('-num_posts')
 
         return populate_tags
 
