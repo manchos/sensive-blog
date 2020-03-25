@@ -24,9 +24,9 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'django_extensions',
     'blog',
     'debug_toolbar',
+    # 'django_extensions',
 ]
 
 MIDDLEWARE = [
@@ -69,7 +69,7 @@ WSGI_APPLICATION = 'sensive_blog.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'NAME': os.path.join(BASE_DIR, os.getenv("DATABASE_NAME")),
     }
 }
 
@@ -88,7 +88,7 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'ru-ru'
 
 TIME_ZONE = 'UTC'
 
@@ -103,5 +103,5 @@ STATIC_URL = '/static/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
 
-SHELL_PLUS_PRINT_SQL = True
-SHELL_PLUS = "ipython"
+# SHELL_PLUS_PRINT_SQL = True
+# SHELL_PLUS = "ipython"

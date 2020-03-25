@@ -10,13 +10,9 @@ class PostQuerySet(models.QuerySet):
         posts_at_year = self.filter(published_at__year=year).order_by('published_at')
         return posts_at_year
 
-    def popular(self, tag=None):
-        posts_qs = self.prefetch_related('author') \
+    def popular(self):
+        most_popular_posts = self.prefetch_related('author') \
             .annotate(likes_count=Count('likes')).order_by('-likes_count')
-        if tag is not None:
-            most_popular_posts = posts_qs.filter(tags__id__contains=tag.id)
-        else:
-            most_popular_posts = posts_qs
         return most_popular_posts
 
     def fetch_with_comments_count(self):
@@ -35,7 +31,6 @@ class PostQuerySet(models.QuerySet):
     def fetch_posts_count_for_tag(self):
         return self.prefetch_related(
             Prefetch('tags', Tag.objects.annotate(num_posts=Count('posts'))))
-
 
 
 class Post(models.Model):
