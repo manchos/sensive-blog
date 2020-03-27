@@ -26,7 +26,6 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'blog',
     'debug_toolbar',
-    # 'django_extensions',
 ]
 
 MIDDLEWARE = [
@@ -103,5 +102,3 @@ STATIC_URL = '/static/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
 
-# SHELL_PLUS_PRINT_SQL = True
-# SHELL_PLUS = "ipython"
